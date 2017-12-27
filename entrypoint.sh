@@ -3,8 +3,8 @@
 if [ "$1" == 'exabgp' ]; then
 
   # Create pipes
-  if [ ! -f /run/exabgp.in ]; then mkfifo /run/exabgp.in; chmod 600 /run/exabgp.in; fi
-  if [ ! -f /run/exabgp.out ]; then mkfifo /run/exabgp.out; chmod 600 /run/exabgp.out; fi
+  if [ ! -p /run/exabgp.in ]; then mkfifo /run/exabgp.in; chmod 600 /run/exabgp.in; fi
+  if [ ! -p /run/exabgp.out ]; then mkfifo /run/exabgp.out; chmod 600 /run/exabgp.out; fi
 
   # Create env file
   if [ ! -f /usr/etc/exabgp/exabgp.env ]; then
