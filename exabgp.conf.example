@@ -1,0 +1,19 @@
+neighbor 10.255.1.254 {
+	router-id 10.255.42.1;
+	local-as 65042;
+	peer-as 65001;
+
+	api services {
+		processes [ watch-loghost, watch-mailhost ];
+	}
+}
+
+process watch-loghost {
+	encoder text;
+	run python -m exabgp healthcheck --cmd "nc -z -w2 -u localhost 514" --no-syslog --label loghost --withdraw-on-down --ip 10.255.255.1/32;
+}
+
+process watch-mailhost {
+	encoder text;
+	run python -m exabgp healthcheck --cmd "nc -z -w2 localhost 25" --no-syslog --label mailhost --withdraw-on-down --ip 10.255.255.2/32;
+}
